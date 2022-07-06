@@ -9,11 +9,7 @@ export const Layout = () => {
     <header>
       <div className="container">
         <NavLink to={MAIN_ROUTE}>Название</NavLink>
-        <div className="controls">
-          <button>Админ панель</button>
-          <button>Войти</button>
-          <button>Авторизация</button>
-        </div>
+
         {/* <Navigation /> */}
       </div>
     </header>

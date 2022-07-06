@@ -1,47 +1,59 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   LOGIN_ROUTE,
   REGISTRATION_ROUTE,
   MAIN_ROUTE,
 } from '../../modules/utils/consts';
-import * as User from '../../api/userApi';
+// import * as User from '../../api/userApi';
 import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 import './styles.scss';
 import { UserAction, UserActionTypes } from '../../types';
 import { useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../modules/hooks/use-redux';
+import * as User from '../../store/action-creators/User';
 
 export const Layout = () => {
   const location = useLocation();
   const isLogin = location.pathname === LOGIN_ROUTE;
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
 
-  const handleAuth = async () => {
-    try {
-      let data;
-      if (isLogin) {
-        data = await User.login(email, password);
-      } else {
-        data = await User.registration(email, password);
-        console.log(data);
+  // const handleAuth = async () => {
+  //   try {
+  //     let data;
+  //     if (isLogin) {
+  //       data = await User.login(email, password);
+  //     } else {
+  //       data = await User.registration(email, password);
+  //       console.log(data);
 
-        dispatch({
-          type: UserActionTypes.FETCH_USER_SUCCESS,
-          payload: data,
-        });
-        navigate(MAIN_ROUTE);
-      }
+  //       dispatch({
+  //         type: UserActionTypes.PUT_USER_SUCCESS,
+  //         payload: data,
+  //       });
+  //       navigate(MAIN_ROUTE);
+  //     }
 
-      // user.setUser(user)
-      // user.setIsAuth(true)
-      // history.push(SHOP_ROUTE)
-    } catch (e: AxiosError | any) {
-      alert(e.response.data.message);
-    }
+  //     // user.setUser(user)
+  //     // user.setIsAuth(true)
+  //     // history.push(SHOP_ROUTE)
+  //   } catch (e: AxiosError | any) {
+  //     alert(e.response.data.message);
+  //   }
+  // };
+
+  const dispatch = useAppDispatch();
+  const data = useAppSelector((state) => state.userReducer);
+  console.log(data);
+
+  const handleAuth = () => {
+    dispatch(
+      isLogin ? User.login(email, password) : User.registration(email, password)
+    );
   };
 
   return (

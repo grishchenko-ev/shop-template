@@ -1,10 +1,10 @@
 export enum UserActionTypes {
-  FETCH_USER = 'FETCH_USER',
-  FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS',
-  FETCH_USER_ERROR = 'FETCH_USER_ERROR',
+  PUT_USER = 'PUT_USER',
+  PUT_USER_SUCCESS = 'PUT_USER_SUCCESS',
+  PUT_USER_ERROR = 'PUT_USER_ERROR',
 }
 
-type UserType = {
+export type UserType = {
   id: number;
   email: string;
   exp: number;
@@ -13,16 +13,16 @@ type UserType = {
 };
 
 type FetchUserActionType = {
-  type: UserActionTypes.FETCH_USER;
+  type: UserActionTypes.PUT_USER;
 };
 
 type FetchUserSuccessActionType = {
-  type: UserActionTypes.FETCH_USER_SUCCESS;
+  type: UserActionTypes.PUT_USER_SUCCESS;
   payload: UserType;
 };
 
 type FetchUserErrorActionType = {
-  type: UserActionTypes.FETCH_USER_ERROR;
+  type: UserActionTypes.PUT_USER_ERROR;
   payload: string;
 };
 
@@ -34,6 +34,6 @@ export type UserAction =
 export type UserState = {
   isAuth: boolean;
   user: UserType | undefined;
-  loading: boolean;
+  isLoading: boolean;
   error: string | null;
 };
